@@ -40,25 +40,25 @@ ellY :: Ellipse -> Double
 ellY (Ellipse (Point _ y) _) = y
 
 ellRadiusX :: Ellipse -> Double
-ellRadiusX (Ellipse _ (Vector (Point x _))) = x
+ellRadiusX (Ellipse _ (Vector x _)) = x
 
 ellRadiusY :: Ellipse -> Double
-ellRadiusY (Ellipse _ (Vector (Point _ y))) = y
+ellRadiusY (Ellipse _ (Vector _ y)) = y
 
 mkEllipse' :: Point -> Vector -> Maybe Ellipse
-mkEllipse' c r@(Vector (Point rx ry))
+mkEllipse' c r@(Vector rx ry)
     | rx >= 0 && ry >= 0 = Just $ Ellipse c r
     | otherwise          = Nothing
 
 mkEllipse :: Double -> Double -> Double -> Double -> Maybe Ellipse
 mkEllipse x y radiusX radiusY =
-    mkEllipse' (Point x y) (Vector $ Point radiusX radiusY)
+    mkEllipse' (Point x y) (Vector radiusX radiusY)
 
 contains' :: Ellipse -> Point -> Bool
 contains' e (Point x y) = contains e x y
 
 contains :: Ellipse -> Double -> Double -> Bool
-contains (Ellipse (Point cx cy) (Vector (Point rx ry))) x y
+contains (Ellipse (Point cx cy) (Vector rx ry)) x y
     | rx == 0 && ry == 0 = x == cx && y == cy
     | rx == 0            = x == cx && abs (y - cy) <= ry
     | ry == 0            = y == cy && abs (x - cx) <= rx
@@ -71,7 +71,7 @@ offset' :: Ellipse -> Vector -> Ellipse
 offset' e v = e { center = center e .+> v }
 
 offset :: Ellipse -> Double -> Double -> Ellipse
-offset e x y = offset' e $ mkVector x y
+offset e x y = offset' e $ Vector x y
 
 -------------------------------------------------------------------------------
 -- Testing
@@ -94,7 +94,7 @@ props = testGroup "properties"
     [ testProperty "ellipsis contains own center point" $
         \e -> contains e (ellX e) (ellY e)
     , testProperty "ellipsis does not contain point outside enclosing rectangle" $
-        \e@(Ellipse (Point cx cy) (Vector (Point rx ry))) x y ->
+        \e@(Ellipse (Point cx cy) (Vector rx ry)) x y ->
           abs (x - cx) > rx ||
           abs (y - cy) > ry ==>
           not $ contains e x y

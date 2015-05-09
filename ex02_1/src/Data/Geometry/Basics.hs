@@ -1,10 +1,11 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE PatternSynonyms #-}
 
 module Data.Geometry.Basics
 ( Point(..)
-, Vector(..)
-, mkVector
+, Vector
+, pattern Vector
 , (.+>)
 , (.->)
 , (.-.)
@@ -23,15 +24,14 @@ data Point =
           }
   deriving (Eq, Ord, Read, Show)
 
-newtype Vector = Vector { getVector :: Point }
+newtype Vector = MkVector Point
   deriving (Eq, Ord, Read, Show
 #ifdef TEST
            , Arbitrary
 #endif
            )
 
-mkVector :: Double -> Double -> Vector
-mkVector x y = Vector $ Point x y
+pattern Vector x y = MkVector (Point x y)
 
 (..+..) :: Point -> Point -> Point
 (Point x1 y1) ..+.. (Point x2 y2) = Point (x1 + x2) (y1 + y2)
@@ -40,22 +40,25 @@ mkVector x y = Vector $ Point x y
 (Point x1 y1) ..-.. (Point x2 y2) = Point (x1 - x2) (y1 - y2)
 
 (.+>) :: Point -> Vector -> Point
-p .+> (Vector v) = p ..+.. v
+p .+> (MkVector v) = p ..+.. v
 
 (.->) :: Point -> Vector -> Point
-p .-> (Vector v) = p ..-.. v
+p .-> (MkVector v) = p ..-.. v
 
 (.-.) :: Point -> Point -> Vector
-p1 .-. p2 = Vector $ p1 ..-.. p2
+p1 .-. p2 = MkVector $ p1 ..-.. p2
 
 (>+>) :: Vector -> Vector -> Vector
-(Vector p1) >+> (Vector p2) = Vector $ p1 ..+.. p2
+(MkVector p1) >+> (MkVector p2) = MkVector $ p1 ..+.. p2
 
 (>->) :: Vector -> Vector -> Vector
-(Vector p1) >-> (Vector p2) = p1 .-. p2
+(MkVector p1) >-> (MkVector p2) = p1 .-. p2
 
 vectorLength :: Vector -> Double
-vectorLength (Vector (Point x y)) = sqrt $ x^2 + y^2
+vectorLength (Vector x y) = sqrt $ x^^^2 + y^^^2
+  where
+    (^^^) :: Double -> Int -> Double
+    (^^^) = (^)
 
 #ifdef TEST
 instance Arbitrary Point where

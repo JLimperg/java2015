@@ -10,12 +10,12 @@ data Rectangle
   deriving (Eq, Ord, Read, Show)
 
 mkRectangle :: Point -> Vector -> Maybe Rectangle
-mkRectangle topLeft sides@(Vector (Point x y))
-    | x >= 0 && y >= 0 = Just $ Rectangle topLeft sides
+mkRectangle anchor sides@(Vector x y)
+    | x >= 0 && y >= 0 = Just $ Rectangle anchor sides
     | otherwise        = Nothing
 
 contains :: Rectangle -> Point -> Bool
-contains (Rectangle (Point topx topy) (Vector (Point lx ly))) (Point x y) =
+contains (Rectangle (Point topx topy) (Vector lx ly)) (Point x y) =
     x >= topx && y >= topy &&
     x <= topx + lx && y <= topy + ly
 
