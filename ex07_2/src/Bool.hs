@@ -8,9 +8,9 @@ data BExpr
     | Or  BExpr BExpr
   deriving (Read, Show, Eq, Ord)
 
-eval :: (String -> Bool) -> BExpr -> Bool
-eval _         (Const b)   = b
+eval :: (String -> Maybe Bool) -> BExpr -> Maybe Bool
+eval _         (Const b)   = Just b
 eval envLookup (Var name)  = envLookup name
-eval envLookup (Not e)     = not $ eval envLookup e
-eval envLookup (And e1 e2) = (eval envLookup e1) && (eval envLookup e2)
-eval envLookup (Or  e1 e2) = (eval envLookup e1) || (eval envLookup e2)
+eval envLookup (Not e)     = not <$> eval envLookup e
+eval envLookup (And e1 e2) = (&&) <$> (eval envLookup e1) <*> (eval envLookup e2)
+eval envLookup (Or  e1 e2) = (||) <$> (eval envLookup e1) <*> (eval envLookup e2)
