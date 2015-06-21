@@ -17,6 +17,7 @@ library
   exposed-modules:     SpreadSheet
   other-extensions:    TupleSections
   build-depends:       base ==4.8.*
+                     , containers ==0.5.*
                      , text ==1.2.*
                      , primitive ==0.6.*
                      , vector ==0.10.*
@@ -28,6 +29,7 @@ executable undo-example
   main-is:             Main.hs
   other-extensions:    TupleSections
   build-depends:       base ==4.8.*
+                     , containers ==0.5.*
                      , text ==1.2.*
                      , primitive ==0.6.*
                      , vector ==0.10.*

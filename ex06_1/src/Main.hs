@@ -7,7 +7,7 @@ import           SpreadSheet
 main :: IO ()
 main = do
     sheetStr <- stToIO $ do
-      s <- mkSpreadSheet 2
+      s <- mkSpreadSheet Nothing 2
       apply (Put (Index 0) 0) s
       apply (Put (Index 0) 1) s
       undo s
