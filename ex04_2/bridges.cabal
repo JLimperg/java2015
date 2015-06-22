@@ -1,0 +1,28 @@
+name:                bridges
+version:             0.1.0.0
+synopsis:            Haskell interpretation of ex04_2 (contains ex04_1)
+-- description:         
+homepage:            https://github.com/JLimperg/java2015
+license:             MIT
+license-file:        LICENSE
+author:              Jannis Limperg
+maintainer:          jannis@limperg.de
+copyright:           (c) 2015 Jannis Limperg
+category:            Education
+build-type:          Simple
+-- extra-source-files:  
+cabal-version:       >=1.10
+
+library
+  exposed-modules:     Bridges.Bridge
+                     , Bridges.Traveller
+                     , Bridges.Simulation
+  -- other-modules:       
+  other-extensions:    FlexibleContexts
+  build-depends:       base ==4.8.*
+                     , auto ==0.4.*
+                     , containers ==0.5.*
+                     , mtl ==2.2.*
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall
