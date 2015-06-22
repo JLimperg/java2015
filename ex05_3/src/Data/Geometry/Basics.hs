@@ -9,6 +9,7 @@ module Data.Geometry.Basics
 , (.+>)
 , (.->)
 , (.-.)
+, (.*>)
 , (>+>)
 , (>->)
 , vectorLength
@@ -44,6 +45,9 @@ p .+> (MkVector v) = p ..+.. v
 
 (.->) :: Point -> Vector -> Point
 p .-> (MkVector v) = p ..-.. v
+
+(.*>) :: Point -> Vector -> Point
+(Point x1 y1) .*> (Vector x2 y2) = Point (x1 * x2) (y1 * y2)
 
 (.-.) :: Point -> Point -> Vector
 p1 .-. p2 = MkVector $ p1 ..-.. p2

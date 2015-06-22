@@ -19,6 +19,7 @@ library
                      , Data.Geometry.Rectangle
                      , Data.Geometry.Shape
                      , Data.Geometry.SetOps
+                     , Data.Geometry.Transformation
   -- other-modules:       
   other-extensions:    RecordWildCards
                      , CPP
