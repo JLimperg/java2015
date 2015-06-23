@@ -4,10 +4,8 @@ module Data.Sequence.Ext
 
 import           Data.Sequence
 
+splitAtR :: Int -> Seq a -> (Seq a, Seq a)
+splitAtR i s = splitAt (length s - i) s
+
 dropR :: Int -> Seq a -> Seq a
-dropR n xs
-    | n <= 0    = xs
-    | otherwise
-    = case viewr xs of
-        EmptyR   -> empty
-        xs' :> _ -> dropR (n - 1) xs'
+dropR i = fst . splitAtR i
