@@ -2,6 +2,7 @@ module Data.Sequence.Ext
 ( dropR
 ) where
 
+import           Prelude hiding (length, splitAt)
 import           Data.Sequence
 
 splitAtR :: Int -> Seq a -> (Seq a, Seq a)
