@@ -46,6 +46,7 @@ data APrim
     = AVar Name
     | AConst Integer
     | AParens Sum
+    | AAssign Name APrim
   deriving (Read, Show, Eq, Ord)
 
 -------------------------------------------------------------------------------
@@ -64,9 +65,10 @@ multP :: TokenParser Mult
 multP = Mult <$> list1P aPrimP starTok
 
 aPrimP :: TokenParser APrim
-aPrimP =   (AVar <$> identTok)
+aPrimP =   try (AAssign <$> (identTok <* equalsTok) <*> aPrimP)
        <|> (AConst <$> naturalLitTok)
        <|> (AParens <$> between parenOpenTok parenCloseTok aExprP)
+       <|> (AVar <$> try identTok)
 
 -------------------------------------------------------------------------------
 -- Printing
@@ -84,9 +86,10 @@ ppProduct :: Mult -> Builder
 ppProduct = ppList1 "*" ppAPrim . fromMult
 
 ppAPrim :: APrim -> Builder
-ppAPrim (AVar name) = fromText . fromName $ name
-ppAPrim (AConst n)  = fromString $ show n
-ppAPrim (AParens e) = "(" <> ppAExpr' e <> ")"
+ppAPrim (AVar name)        = fromText . fromName $ name
+ppAPrim (AConst n)         = fromString $ show n
+ppAPrim (AParens e)        = "(" <> ppAExpr' e <> ")"
+ppAPrim (AAssign name val) = fromText (fromName name) <> "=" <> ppAPrim val
 
 -------------------------------------------------------------------------------
 -- Evaluation
@@ -101,6 +104,10 @@ evalMult :: (Monad m) => Mult -> ReplT m Integer
 evalMult = fmap product . traverse evalAPrim . fromMult
 
 evalAPrim :: (Monad m) => APrim -> ReplT m Integer
-evalAPrim (AVar name) = lookupVarE name
-evalAPrim (AConst n)  = return n
-evalAPrim (AParens e) = evalAExpr e
+evalAPrim (AVar name)        = lookupVarE name
+evalAPrim (AConst n)         = return n
+evalAPrim (AParens e)        = evalAExpr e
+evalAPrim (AAssign name val) = do
+    val' <- evalAPrim val
+    assignVar name val'
+    return val'

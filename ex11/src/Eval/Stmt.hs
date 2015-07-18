@@ -24,7 +24,6 @@ import           Text.Parsec.Prim hiding ((<|>))
 
 import           Eval.AExpr
 import           Eval.Common
-import           Eval.Env
 import           Eval.Token
 import           List1
 import           MonadRepl
@@ -35,7 +34,6 @@ import           MonadRepl
 data Stmt
     = If     AExpr Stmt Stmt
     | While  AExpr Stmt
-    | Assign Name AExpr
     | Seq    (List1 Stmt)
  deriving (Eq, Ord, Read, Show)
 
@@ -46,7 +44,7 @@ parseStmt :: Text -> Either ParseError Stmt
 parseStmt = parse stmtP "" <=< tokenize
 
 stmtP :: TokenParser Stmt
-stmtP = ifP <|> whileP <|> assignP <|> seqP
+stmtP = ifP <|> whileP <|> seqP
 
 ifP :: TokenParser Stmt
 ifP = If <$> (ifTok *> parenOpenTok *> aExprP <* parenCloseTok)
@@ -55,9 +53,6 @@ ifP = If <$> (ifTok *> parenOpenTok *> aExprP <* parenCloseTok)
 whileP :: TokenParser Stmt
 whileP = While <$> (whileTok *> parenOpenTok *> aExprP <* parenCloseTok)
                <*> stmtP
-
-assignP :: TokenParser Stmt
-assignP = Assign <$> (identTok <* equalsTok) <*> aExprP
 
 seqP :: TokenParser Stmt
 seqP = Seq <$> between curlyBraceOpenTok curlyBraceCloseTok
@@ -77,9 +72,6 @@ ppStmt' (If cond thenBranch elseBranch)
 ppStmt' (While cond body)
     =  "while(" <> ppAExpr' cond <> ") " <> ppStmt' body
 
-ppStmt' (Assign varname val)
-    = fromText (fromName varname) <> "=" <> ppAExpr' val
-
 ppStmt' (Seq stmts)
     = ppList1 ";" ppStmt' stmts
 
@@ -98,7 +90,5 @@ execStmt stmt@(While cond body) = do
     if condVal /= 0
        then execStmt body >> execStmt stmt
        else return ()
-
-execStmt (Assign varname val) = assignVar varname =<< evalAExpr val
 
 execStmt (Seq stmts) = mapM_ execStmt . toList $ stmts
