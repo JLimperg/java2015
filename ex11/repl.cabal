@@ -1,0 +1,35 @@
+name:                repl
+version:             0.1.0.0
+synopsis:            Haskell interpretation of ex11
+-- description:         
+homepage:            https://github.com/JLimperg/java2015
+license:             MIT
+license-file:        LICENSE
+author:              Jannis Limperg
+maintainer:          jannis@limperg.de
+copyright:           (c) 2015 Jannis Limperg
+category:            Education
+build-type:          Simple
+-- extra-source-files:  
+cabal-version:       >=1.10
+
+executable while-repl
+  main-is:             Main.hs
+  build-depends:       base ==4.8.*
+                     , attoparsec ==0.12.*
+                     , containers ==0.5.*
+                     , haskeline ==0.7.*
+                     , parsec ==3.1.*
+                     , text ==1.2.*
+                     , transformers ==0.4.*
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+  other-modules:       List1
+                     , MonadRepl
+                     , UI
+                     , Eval.AExpr
+                     , Eval.Common
+                     , Eval.Env
+                     , Eval.Stmt
+                     , Eval.Token
