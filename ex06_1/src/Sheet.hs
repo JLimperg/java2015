@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 module Sheet where
 
 import           Control.Monad.ST
@@ -7,6 +9,10 @@ import qualified Data.Text.Lazy as T
 import qualified Data.Vector.Unboxed as VI
 import           Data.Vector.Unboxed.Mutable (STVector)
 import qualified Data.Vector.Unboxed.Mutable as V
+
+#if !MIN_VERSION_base(4,8,0)
+import           Control.Applicative ((<$>))
+#endif
 
 newtype Index = Index Int
   deriving (Eq, Ord, Read, Show)

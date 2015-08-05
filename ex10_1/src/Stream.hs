@@ -6,6 +6,7 @@ module Stream
 ) where
 
 import           Data.Char (isSpace, toUpper)
+import           Prelude hiding (words)
 
 words :: String -> [String]
 words = breakOn isSpace

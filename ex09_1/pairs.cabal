@@ -16,7 +16,7 @@ cabal-version:       >=1.10
 library
   exposed-modules:     Pair
   other-extensions:    
-  build-depends:       base ==4.8.*
+  build-depends:       base >= 4.7 && < 4.9
   hs-source-dirs:      src
   default-language:    Haskell2010
   ghc-options:         -Wall

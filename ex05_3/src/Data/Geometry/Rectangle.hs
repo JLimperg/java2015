@@ -1,3 +1,5 @@
+{-# LANGUAGE PatternSynonyms #-}
+
 module Data.Geometry.Rectangle where
 
 import           Data.Geometry.Basics

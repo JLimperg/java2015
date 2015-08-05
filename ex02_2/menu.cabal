@@ -19,9 +19,9 @@ library
   other-extensions:    TemplateHaskell
                      , RankNTypes
                      , GeneralizedNewtypeDeriving
-  build-depends:       base ==4.8.*
+  build-depends:       base >= 4.7 && < 4.9
                      , containers ==0.5.*
-                     , lens-family ==1.2.*
+                     , lens-family-core ==1.2.*
                      , lens-family-th ==0.4.*
   hs-source-dirs:      src
   default-language:    Haskell2010

@@ -15,6 +15,9 @@ module Data.Geometry.Basics
 ) where
 
 #ifdef TEST
+#if !MIN_VERSION_base(4,8,0)
+import           Control.Applicative ((<$>), (<*>))
+#endif
 import           Test.Tasty.QuickCheck
 #endif
 

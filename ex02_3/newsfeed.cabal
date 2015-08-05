@@ -20,7 +20,7 @@ library
   other-extensions:    TemplateHaskell
                      , RankNTypes
                      , ScopedTypeVariables
-  build-depends:       base ==4.8.*
+  build-depends:       base >= 4.7 && < 4.9
                      , time ==1.5.*
                      , containers ==0.5.*
                      , lens-family ==1.2.*
@@ -36,7 +36,7 @@ executable test-newsfeed
   other-extensions:    TemplateHaskell
                      , RankNTypes
                      , ScopedTypeVariables
-  build-depends:       base ==4.8.*
+  build-depends:       base >= 4.7 && < 4.9
                      , time ==1.5.*
                      , containers ==0.5.*
                      , lens-family ==1.2.*

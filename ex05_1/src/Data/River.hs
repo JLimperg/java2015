@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 module Data.River
 ( RiverSystem
 , mkSource
@@ -6,6 +8,11 @@ module Data.River
 , isUpstreamReachable
 , testNetwork
 ) where
+
+#if !MIN_VERSION_base(4,8,0)
+import           Data.Foldable
+import           Prelude hiding (elem, any)
+#endif
 
 import           Data.Maybe
 import           Data.Monoid

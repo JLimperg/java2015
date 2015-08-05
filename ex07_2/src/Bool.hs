@@ -1,4 +1,10 @@
+{-# LANGUAGE CPP #-}
+
 module Bool where
+
+#if !MIN_VERSION_base(4,8,0)
+import           Control.Applicative ((<$>), (<*>))
+#endif
 
 data BExpr
     = Const Bool

@@ -16,7 +16,9 @@ cabal-version:       >=1.10
 library
   exposed-modules:     SpreadSheet
   other-extensions:    TupleSections
-  build-depends:       base ==4.8.*
+                     , CPP
+                     , GeneralizedNewtypeDeriving
+  build-depends:       base >= 4.7 && < 4.9
                      , containers ==0.5.*
                      , text ==1.2.*
                      , primitive ==0.6.*
@@ -28,7 +30,9 @@ library
 executable undo-example
   main-is:             Main.hs
   other-extensions:    TupleSections
-  build-depends:       base ==4.8.*
+                     , CPP
+                     , GeneralizedNewtypeDeriving
+  build-depends:       base >= 4.7 && < 4.9
                      , containers ==0.5.*
                      , text ==1.2.*
                      , primitive ==0.6.*

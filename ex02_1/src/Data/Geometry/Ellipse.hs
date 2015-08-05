@@ -1,5 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE PatternSynonyms #-}
 
 module Data.Geometry.Ellipse
 ( Ellipse(..)
@@ -23,6 +24,9 @@ where
 import           Data.Maybe
 import           Test.Tasty
 import           Test.Tasty.QuickCheck
+#if !MIN_VERSION_base(4,8,0)
+import           Control.Applicative ((<$>), (<*>))
+#endif
 #endif
 
 import           Data.Geometry.Basics

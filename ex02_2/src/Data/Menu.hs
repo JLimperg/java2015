@@ -22,9 +22,9 @@ import           Data.Set (Set)
 import qualified Data.Set as S
 import           Data.Map (Map)
 import qualified Data.Map as M
-import           Lens.Family2
-import           Lens.Family2.Stock
-import           Lens.Family2.TH
+import           Lens.Family
+import           Lens.Family.Stock
+import           Lens.Family.TH
 
 newtype ID = ID { getID :: Int }
   deriving (Eq, Ord, Read, Show)
@@ -52,5 +52,5 @@ $(makeLenses ''MenuEntry)
 
 type Menu = Map ID MenuEntry
 
-menuEntryAt :: ID -> Lens' Menu (Maybe MenuEntry)
+menuEntryAt :: (Functor f) => ID -> LensLike' f Menu (Maybe MenuEntry)
 menuEntryAt = at

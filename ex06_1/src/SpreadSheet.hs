@@ -1,5 +1,6 @@
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE CPP #-}
 
 module SpreadSheet
 ( SpreadSheet
@@ -21,6 +22,10 @@ import qualified Data.Sequence.Ext as Seq
 import           Data.STRef
 import           Sheet (Sheet, mkSheet, Index)
 import qualified Sheet as S
+
+#if !MIN_VERSION_base(4,8,0)
+import           Control.Applicative (pure, (<$>), (<*>))
+#endif
 
 newtype HistorySize = HistorySize { getHistorySize :: Int }
   deriving (Read, Show, Eq, Ord, Num)

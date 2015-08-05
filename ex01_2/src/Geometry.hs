@@ -13,6 +13,9 @@ module Geometry
 where
 
 import           Data.Maybe
+#if !MIN_VERSION_base(4,8,0)
+import           Control.Applicative ((<$>), (<*>))
+#endif
 
 #ifdef TEST
 import           Test.Tasty

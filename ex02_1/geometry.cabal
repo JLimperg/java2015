@@ -22,18 +22,18 @@ library
   other-extensions:    RecordWildCards
                      , CPP
                      , PatternSynonyms
-  build-depends:       base ==4.8.*
+  build-depends:       base >= 4.7 && < 4.9
   hs-source-dirs:      src
   default-language:    Haskell2010
   ghc-options:         -Wall -fno-warn-incomplete-patterns
 
 test-suite geometry-tests
   type:                exitcode-stdio-1.0
-  build-depends:       base ==4.8.*
+  build-depends:       base >= 4.7 && < 4.9
                      , tasty ==0.10.*
                      , tasty-quickcheck ==0.8.*
   hs-source-dirs:      src, test
   main-is:             TestMain.hs
   default-language:    Haskell2010
   cpp-options:         -D TEST
-  ghc-options:         -Wall
+  ghc-options:         -Wall -fno-warn-incomplete-patterns
